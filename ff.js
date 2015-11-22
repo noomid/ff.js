@@ -17,6 +17,13 @@ var FF = (function(){
                 return _initialized_modules[module_name]
             }
             var module = new _modules[module_name]();
+            if(!(module instanceof _modules[module_name])){
+                for(var i in _modules[module_name].prototype){
+                    if(!module.hasOwnProperty(i)){
+                        module[i] = _modules[module_name].prototype[i];
+                    }
+                }
+            }
             if(module.hasOwnProperty('initialize')){
                 module['initialize']();
             }
